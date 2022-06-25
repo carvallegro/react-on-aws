@@ -44,10 +44,10 @@ jobs:
         uses: robinraju/release-downloader@v1.4
         with:
           tag: ${{ needs.get-release-name.outputs.release-name }}
-          fileName: "experimental-react-app-*.zip"
+          fileName: "react-on-aws-*.zip"
       - name: decompress ZIP file
         run: |
-          unzip experimental-react-app-*.zip
+          unzip react-on-aws-*.zip
       - name: setup AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

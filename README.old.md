@@ -1,2 +1,2 @@
-# experimental-react-app
+# react-on-aws
 Basic React application used for experimentation

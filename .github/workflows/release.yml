@@ -44,11 +44,11 @@ jobs:
           set CI=true && npm build
       - name: Compress built assets
         run: |
-          zip -r experimental-react-app-${{ needs.generate-version-number.outputs.version-number }}.zip build
+          zip -r react-on-aws-${{ needs.generate-version-number.outputs.version-number }}.zip build
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           tag: v${{ needs.generate-version-number.outputs.version-number }}
           name: v${{ needs.generate-version-number.outputs.version-number }}
           commit: ${{ github.sha }}
-          artifacts: "experimental-react-app-v${{ needs.generate-version-number.outputs.version-number }}.zip"
+          artifacts: "react-on-aws-v${{ needs.generate-version-number.outputs.version-number }}.zip"
