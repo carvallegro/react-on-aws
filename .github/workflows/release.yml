@@ -41,7 +41,7 @@ jobs:
           set CI=true && yarn build
       - name: Compress built assets
         run: |
-          zip -r react-on-aws-${{ needs.generate-version-number.outputs.version-number }}.zip build
+          zip -r react-on-aws-v${{ needs.generate-version-number.outputs.version-number }}.zip build
       - name: Release
         uses: ncipollo/release-action@v1
         with:
