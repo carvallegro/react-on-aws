@@ -55,7 +55,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Copy files to S3
         run: |
-          aws s3 sync build s3://${{ env.AWS_S3_BUCKET_NAME }}
-      - name: Trigger Cloudfront cache busting
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+          aws s3 sync build s3://${{ env.AWS_S3_BUCKET_NAME }}/build
+#      - name: Invalidate Cloudfront cache
+#        run: |
+#          aws cloudfront create-invalidation --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
