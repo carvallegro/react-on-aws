@@ -34,11 +34,11 @@ jobs:
       - name: Install packages
         run: yarn install
       - name: Test
-        run: set CI=true && npm test
+        run: set CI=true && yarn test
       - name: Build
         run: |
           npm version ${{ needs.generate-version-number.outputs.version-number }}
-          set CI=true && npm build
+          set CI=true && yarn build
       - name: Compress built assets
         run: |
           zip -r react-on-aws-${{ needs.generate-version-number.outputs.version-number }}.zip build
