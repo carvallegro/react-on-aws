@@ -1,0 +1,54 @@
+name: release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  #
+  # Temporary job for the investigation. Will be replaced with semver
+  #
+  generate-version-number:
+    name: Generate version number
+    runs-on: ubuntu-latest
+    outputs:
+      version-number: ${{ steps.generate.output.version-number }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.14.2'
+      - name: generate version number
+        id: generate
+        run: |
+          TAG_COUNT=$(git tag | wc -l | xargs)
+          echo "::set-output name=version::0.1.$TAG_COUNT"
+  release:
+    name: Test, Build & Release
+    runs-on: ubuntu-latest
+    needs: generate-version-number
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.14.2'
+      # TODO: cache dependencies and install using frozen-lockfile and --offline
+      - name: Install packages
+        run: yarn install
+      - name: Test
+        run: set CI=true && npm test
+      - name: Build
+        run: |
+          npm version ${{ needs.generate-version-number.outputs.version-number }}
+          set CI=true && npm build
+      - name: Compress built assets
+        run: |
+          zip -r experimental-react-app-${{ needs.generate-version-number.outputs.version-number }}.zip build
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ needs.generate-version-number.outputs.version-number }}
+          name: v${{ needs.generate-version-number.outputs.version-number }}
+          commit: ${{ github.sha }}
+          artifacts: "experimental-react-app-v${{ needs.generate-version-number.outputs.version-number }}.zip"

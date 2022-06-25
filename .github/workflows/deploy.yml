@@ -1,0 +1,61 @@
+name: Deploy assets to S3
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+        release_name:
+          description: 'Release name'
+          required: true
+
+env:
+  AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+  AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+
+jobs:
+  get-release-name:
+    name: Get release name from trigger event
+    runs-on: ubuntu-latest
+    outputs:
+      release-name: ${{ steps.get-name.output.name }}
+    steps:
+      - id: get-name
+        run: |
+          if [ -n $GITHUB_REF ] 
+          then 
+            echo "::set-output name=name::$GITHUB_REF" 
+          elif [ -n ${{ inputs.release_name }} ] 
+          then 
+            echo "::set-output name=name::${{ inputs.release_name }}" 
+          fi
+
+  deploy-to-s3:
+    name: Deploy to S3
+    runs-on: ubuntu-latest
+    needs: get-release-name
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: download release assets
+        uses: robinraju/release-downloader@v1.4
+        with:
+          tag: ${{ needs.get-release-name.outputs.release-name }}
+          fileName: "experimental-react-app-*.zip"
+      - name: decompress ZIP file
+        run: |
+          unzip experimental-react-app-*.zip
+      - name: setup AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Copy files to S3
+        run: |
+          aws s3 sync build s3://${{ env.AWS_S3_BUCKET_NAME }}
+      - name: Trigger Cloudfront cache busting
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
