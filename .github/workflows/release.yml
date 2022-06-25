@@ -3,12 +3,9 @@ name: release
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
-  #
-  # Temporary job for the investigation. Will be replaced with semver
-  #
   generate-version-number:
     name: Generate version number
     runs-on: ubuntu-latest
