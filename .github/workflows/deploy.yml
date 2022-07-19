@@ -26,10 +26,10 @@ jobs:
       - id: get-name
         run: |
           echo "start"
-          if [ -n ${{ inputs.release_name }} ] 
+          if [ -n ${{ inputs.release_name }} ]
+          then
             echo "Outputting version from manuel entry ${{ inputs.release_name }}"
             echo "::set-output name=name::${{ inputs.release_name }}" 
-          then
           elif [ -n $GITHUB_REF ] 
           then 
             echo "Outputting version from tag $GITHUB_REF"
