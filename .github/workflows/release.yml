@@ -30,7 +30,6 @@ jobs:
         run: set CI=true && yarn test
       - name: Build
         run: |
-          npm version ${{ steps.version-number.outputs.version }}
           set CI=true && yarn build
       - name: Compress built assets
         run: |
