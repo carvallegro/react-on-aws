@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={janeLogo} className="App-logo" alt="logo" />
         <h1>
-          Jane has a pink background
+          Jane has a red background
         </h1>
       </header>
     </div>
