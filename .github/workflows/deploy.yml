@@ -21,7 +21,7 @@ jobs:
     name: Get release name from trigger event
     runs-on: ubuntu-latest
     outputs:
-      release-name: ${{ steps.get-name.output.name }}
+      release-name: ${{ steps.get-name.outputs.name }}
     steps:
       - id: get-name
         run: |

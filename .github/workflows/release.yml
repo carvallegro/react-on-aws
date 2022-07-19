@@ -37,7 +37,7 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          tag: v${{ fromJson(steps.version-number.outputs.version) }}
-          name: v${{ fromJson(steps.version-number.outputs.version) }}
+          tag: "v${{ fromJson(steps.version-number.outputs.version) }}"
+          name: "v${{ fromJson(steps.version-number.outputs.version) }}"
           commit: ${{ github.sha }}
           artifacts: "react-on-aws-v${{ fromJson(steps.version-number.outputs.version) }}.zip"
