@@ -60,9 +60,9 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - name: Copy files to S3
         run: |
-          aws s3 mv s3://${{ env.AWS_S3_BUCKET_NAME }}/build s3://${{ env.AWS_S3_BUCKET_NAME }}/deprecated
+          aws s3 mv s3://${{ env.AWS_S3_BUCKET_NAME }}/build s3://${{ env.AWS_S3_BUCKET_NAME }}/deprecated --recursive
           aws s3 sync build s3://${{ env.AWS_S3_BUCKET_NAME }}/build --delete --exact-timestamps
-          aws s3 rm s3://${{ env.AWS_S3_BUCKET_NAME }}/deprecated
+          aws s3 rm s3://${{ env.AWS_S3_BUCKET_NAME }}/deprecated --recursive
 #      - name: Invalidate Cloudfront cache
 #        run: |
 #          aws cloudfront create-invalidation --distribution-id ${{ env.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
