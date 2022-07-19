@@ -48,7 +48,7 @@ jobs:
       - name: download release assets
         uses: robinraju/release-downloader@v1.4
         with:
-          tag: ${{ fromJson(needs.get-release-name.outputs.release-name) }}
+          tag: "${{ needs.get-release-name.outputs.release-name }}"
           fileName: "react-on-aws-*.zip"
       - name: decompress ZIP file
         run: |
