@@ -1,13 +1,14 @@
 name: Deploy assets to S3
 
 on:
-  release:
-    types: [published, released]
+  push:
+    tags:
+      - v**
   workflow_dispatch:
     inputs:
-        release_name:
-          description: 'Release name'
-          required: true
+      release_name:
+        description: 'Release name'
+        required: true
 
 env:
   AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
