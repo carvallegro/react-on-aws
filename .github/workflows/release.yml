@@ -17,7 +17,7 @@ jobs:
       - id: version-number
         name: get Version number
         run: |
-          VERSION = $(cat package.json | jq '.version')
+          VERSION=$(cat package.json | jq '.version')
           echo "::set-output name=version::$VERSION"
       # TODO: cache dependencies and install using frozen-lockfile and --offline
       - name: Install packages
