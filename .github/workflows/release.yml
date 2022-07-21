@@ -29,8 +29,11 @@ jobs:
       - name: Test
         run: set CI=true && yarn test
       - name: Build
+        env:
+          REACT_APP_VERSION: ${{ fromJson(steps.version-number.outputs.version) }}
         run: |
           set CI=true && yarn build
+          echo $REACT_APP_VERSION > build/version.txt
       - name: Compress built assets
         run: |
           zip -r react-on-aws-v${{ fromJson(steps.version-number.outputs.version) }}.zip build
