@@ -13,7 +13,7 @@ function App() {
       <header className="App-header">
         <img src={janeLogo} className="App-logo" alt="logo" />
         <h1>
-          Jane has a BLUE background
+          Jane has a CYAN background
         </h1>
           <h2>Version number: {VERSION_NUMBER}</h2>
       </header>
