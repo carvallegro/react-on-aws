@@ -1,0 +1,31 @@
+
+.notification {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    width: 400px;
+    padding: 0.6rem;
+
+    display: flex;
+    flex-direction: row;
+    gap: 0.4rem;
+
+    background-color: whitesmoke;
+    border: 1px solid lightslategrey;
+}
+
+.notification .message {
+    color: #111;
+}
+
+.notification .message p {
+    margin: 0;
+}
+
+.notification .message .subtext{
+    color: dimgrey;
+}
+
+.notification .btn {
+    font-weight: bold;
+}

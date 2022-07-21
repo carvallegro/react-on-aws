@@ -1,0 +1,1 @@
+export {UpdateNotifications} from './component'
