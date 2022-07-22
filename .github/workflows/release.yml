@@ -23,9 +23,8 @@ jobs:
         run: |
           VERSION=$(cat package.json | jq '.version')
           echo "::set-output name=version::$VERSION"
-      # TODO: cache dependencies and install using frozen-lockfile and --offline
       - name: Install packages
-        run: yarn install
+        run: yarn install --offline --frozen-lockfile
       - name: Test
         run: set CI=true && yarn test
       - name: Build
