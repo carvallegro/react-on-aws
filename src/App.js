@@ -13,7 +13,7 @@ function App() {
       <header className="App-header">
         <img src={janeLogo} className="App-logo" alt="logo" />
         <h1>
-          Hello JSF team
+          No more demos
         </h1>
           <h2>Version number: {VERSION_NUMBER}</h2>
       </header>
